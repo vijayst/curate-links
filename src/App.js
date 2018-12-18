@@ -19,8 +19,8 @@ class App extends Component {
                     <ins
                         className="adsbygoogle"
                         style={{ display: 'block' }}
-                        data-ad-client="ca-pub-2746031862127149"
-                        data-ad-slot="7309827854"
+                        data-ad-client={process.env.REACT_APP_AD_CLIENT}
+                        data-ad-slot={process.env.REACT_APP_AD_SLOT}
                         data-ad-format="auto"
                         data-full-width-responsive="true"
                     />
