@@ -29,6 +29,11 @@
     grid-column: 7 / 10;
 }
 
+.ads {
+    grid-row: 5 / 6;
+    grid-column: 2 / 10;
+}
+
 @media only screen and (max-width: 1120px) {
     .soon {
         grid-column: 5 / 10;
@@ -40,7 +45,7 @@
         grid-template-columns: 10% 1fr 10%;
     }
 
-    .title, .subtitle, .soon {
+    .title, .subtitle, .soon, .ads {
         grid-column: 2 / 3;
     }
 }
