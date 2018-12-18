@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
 
 class App extends Component {
+    componentDidMount() {
+        if (window.adsbygoogle) {
+            window.adsbygoogle.push({});
+        }
+    }
+
     render() {
         return (
             <div className="app">
