@@ -1,17 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import Home from './home/Home';
+import Login from './auth/Login';
+import Admin from './admin/Admin';
 
-class App extends Component {
-    render() {
-        return (
-            <div className="app">
-                <div className="title">Curate Links</div>
-                <div className="subtitle">
-                    Organize knowledge and help others
-                </div>
-                <div className="soon">Coming Soon ...</div>
-            </div>
-        );
-    }
+function App() {
+    return (
+        <BrowserRouter>
+            <Switch>
+                <Route path="/admin" component={Admin} />
+                <Route path="/login" component={Login} />
+                <Route path="/" component={Home} />
+            </Switch>
+        </BrowserRouter>
+    );
 }
 
 export default App;
