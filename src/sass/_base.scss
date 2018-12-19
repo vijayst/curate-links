@@ -22,4 +22,52 @@ body {
 .title {
     font-size: $font-large;
     color: $color-black;
+    margin-bottom: 2.4rem;
+}
+
+.textbox {
+    font-family: Ubuntu;
+    font-size: $font-medium;
+    color: $color-black;
+    padding: 6px 10px;
+    border: 1px solid $color-grey-12;
+    border-radius: $border-radius;
+    display: block;
+    width: 30rem;
+    margin-bottom: 1.6rem;
+
+    &:focus {
+        outline: none;
+        border: 1px solid $color-grey-24;
+    }
+}
+
+.button {
+    font-family: Ubuntu;
+    font-size: $font-medium;
+    padding: 8px 20px;
+    border-radius: $border-radius;
+    margin-top: 0.8rem;
+    background-color: $color-button;
+    color: $color-white;
+    cursor: pointer;
+
+    &:focus {
+        background-color: $color-button;
+        outline: none;
+    }
+
+    &:hover {
+        background-color: $color-button-hover;
+    }
+
+    &:active {
+        background-color: $color-button-active;
+        outline: none;
+    }
+
+    &:disabled {
+        background-color: $color-grey-24;
+        cursor: not-allowed;
+    }
 }
