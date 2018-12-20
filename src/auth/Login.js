@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import firebase from '../common/firebase';
 import Message from '../common/Message';
+import history from '../common/history';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -16,6 +17,7 @@ export default function Login() {
             .then(response => {
                 const { uid, email, qa } = response;
                 localStorage.setItem('userInfo', JSON.stringify({ uid, email, qa }));
+                history.push('/admin');
             })
             .catch(() => {
                 setMessageProps({ error: true, text: 'Incorrect email or password' });
