@@ -1,0 +1,15 @@
+.message {
+    position: fixed;
+    top: 2.4rem;
+    right: 2.4rem;
+    width: 30rem;
+    padding: 2.4rem;
+    font-size: $font-medium;
+    background-color: $color-green;
+    color: $color-white;
+    border-radius: $border-radius;
+
+    &--error {
+        background-color: $color-red;
+    }
+}
