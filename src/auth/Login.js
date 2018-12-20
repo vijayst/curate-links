@@ -15,8 +15,8 @@ export default function Login() {
             .auth()
             .signInWithEmailAndPassword(email, password)
             .then(response => {
-                const { uid, email, qa } = response;
-                localStorage.setItem('userInfo', JSON.stringify({ uid, email, qa }));
+                const { uid, email, ra } = response.user;
+                localStorage.setItem('userInfo', JSON.stringify({ uid, email, ra, loginTime: Date.now() }));
                 history.push('/admin');
             })
             .catch(() => {
