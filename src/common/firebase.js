@@ -3,12 +3,10 @@ import 'firebase/auth';
 import 'firebase/database';
 
 const config = {
-    apiKey: "AIzaSyCiKuSouOr19IIR-GgRQyKo-HDzAQzVQ_E",
+    apiKey: process.env.REACT_APP_FIREBASE_KEY,
     authDomain: "curate-links.firebaseapp.com",
     databaseURL: "https://curate-links.firebaseio.com",
-    projectId: "curate-links",
-    storageBucket: "curate-links.appspot.com",
-    messagingSenderId: "400804820502"
+    projectId: "curate-links"
   };
 
 firebase.initializeApp(config);
