@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Switch, Route } from 'react-router-dom';
 
 export default function Admin() {
     return (
@@ -14,7 +14,10 @@ export default function Admin() {
                 </ul>
             </aside>
             <main className="admin__content">
-
+                <Switch>
+                    <Route path="/admin/topic/create" render={() => <div>Create Topic</div>} />
+                    <Route path="/admin/settings" render={() => <div>Settings</div>} />
+                </Switch>
             </main>
             <footer className="admin__footer">
                 &copy;2019, All rights reserved
