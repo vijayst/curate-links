@@ -5,8 +5,13 @@
     &__item {
         padding: 0.8rem 3.2rem;
 
-        &:hover {
+        &--active {
             background-color: $color-grey-12;
+        }
+
+        &:hover {
+            background-color: $color-grey-8;
+            cursor: pointer;
         }
 
         a:hover {

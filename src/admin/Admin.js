@@ -1,17 +1,25 @@
 import React from 'react';
-import { Link, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
+import Menu from './Menu'
 
-export default function Admin() {
+export default function Admin(props) {
+    const items = [{
+        path: '/admin/topic/create',
+        text: 'Create Topic'
+    }, {
+        path: '/admin/settings',
+        text: 'Settings'
+    }];
+
+    const { pathname } = props.location
+
     return (
         <div className="admin">
             <header className="admin__header">
                 Curate Links
             </header>
             <aside className="admin__nav">
-                <ul className="nav">
-                    <li className="nav__item"><Link to="/admin/topic/create">Create Topic</Link></li>
-                    <li className="nav__item"><Link to="/admin/settings">Settings</Link></li>
-                </ul>
+                <Menu items={items} pathname={pathname} />
             </aside>
             <main className="admin__content">
                 <Switch>
