@@ -72,3 +72,17 @@ body {
         cursor: not-allowed;
     }
 }
+
+a {
+    color: $color-grey-48;
+    text-decoration: none;
+
+    &:hover {
+        color: $color-grey-72;
+        text-decoration: underline;
+    }
+
+    &:active {
+        color: $color-black;
+    }
+}
