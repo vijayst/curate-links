@@ -14,13 +14,19 @@ export default function CreateTopic(props) {
             const topicRef = firebase
                 .database()
                 .ref(`topics/${slug}`);
-            topicRef.set({
-                name,
-                slug,
-                meta
+            topicRef.once('value', function(snapshot) {
+                if (snapshot.exists()) {
+                    setError('Slug is not unique');
+                } else {
+                    topicRef.set({
+                        name,
+                        slug,
+                        meta
+                    });
+                    setError('');
+                    props.history.push(`/admin/topic/${slug}`);
+                }
             });
-            setError('');
-            props.history.push(`/admin/topic/${slug}`);
         } else {
             setError('All fields are required');
         }
