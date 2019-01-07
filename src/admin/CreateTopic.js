@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import firebase from '../common/firebase';
 import Message from '../common/Message';
 
-export default function CreateTopic() {
+export default function CreateTopic(props) {
     const [name, setName] = useState('');
     const [slug, setSlug] = useState('');
     const [meta, setMeta] = useState('');
@@ -21,6 +21,7 @@ export default function CreateTopic() {
                 meta
             });
             setError('');
+            props.history.push(`/admin/topic/${slug}`);
         } else {
             setError('All fields are required');
         }

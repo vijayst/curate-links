@@ -4,25 +4,27 @@ import Menu from './Menu';
 import CreateTopic from './CreateTopic';
 import firebase from '../common/firebase';
 
+const initialItems = [
+    {
+        path: '/admin/topic/create',
+        text: 'Create Topic'
+    },
+    {
+        path: '/admin/settings',
+        text: 'Settings'
+    }
+];
+
 export default function Admin(props) {
-   let [items, setItems] = useState([
-        {
-            path: '/admin/topic/create',
-            text: 'Create Topic'
-        },
-        {
-            path: '/admin/settings',
-            text: 'Settings'
-        }
-    ]);
+   let [items, setItems] = useState(initialItems);
     useEffect(() => {
         firebase
             .database()
             .ref('topics')
             .on('value', function(snapshot) {
+                items = initialItems.slice();
                 snapshot.forEach(function(childSnapshot) {
                     const data = childSnapshot.val();
-                    items = items.slice();
                     items.unshift({
                         text: data.name,
                         path: `/admin/topic/${data.slug}`
