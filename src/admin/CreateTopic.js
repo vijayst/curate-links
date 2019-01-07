@@ -13,8 +13,7 @@ export default function CreateTopic(props) {
         if (name && slug && meta) {
             const topicRef = firebase
                 .database()
-                .ref('topics')
-                .push();
+                .ref(`topics/${slug}`);
             topicRef.set({
                 name,
                 slug,
