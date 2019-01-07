@@ -1,6 +1,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Menu from './Menu'
+import CreateTopic from './CreateTopic';
 
 export default function Admin(props) {
     const items = [{
@@ -23,7 +24,7 @@ export default function Admin(props) {
             </aside>
             <main className="admin__content">
                 <Switch>
-                    <Route path="/admin/topic/create" render={() => <div>Create Topic</div>} />
+                    <Route path="/admin/topic/create" component={CreateTopic} />
                     <Route path="/admin/settings" render={() => <div>Settings</div>} />
                 </Switch>
             </main>

@@ -73,6 +73,22 @@ body {
     }
 }
 
+.text {
+    font-size: 1.6rem;
+    width: 100%;
+    padding: .8rem;
+    border: 1px solid $color-grey-12;
+
+    &:focus {
+        outline: none;
+        border: 1px solid $color-grey-24;
+    }
+
+    &::placeholder {
+        color: $color-grey-12;
+    }
+}
+
 a {
     color: $color-grey-48;
     text-decoration: none;
@@ -85,4 +101,8 @@ a {
     &:active {
         color: $color-black;
     }
+}
+
+h1 {
+    font-size: $font-xlarge;
 }
