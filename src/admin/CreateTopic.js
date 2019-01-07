@@ -1,19 +1,29 @@
 import React, { useState } from 'react';
 import firebase from '../common/firebase';
+import Message from '../common/Message';
 
 export default function CreateTopic() {
     const [name, setName] = useState('');
     const [slug, setSlug] = useState('');
     const [meta, setMeta] = useState('');
+    const [error, setError] = useState('');
 
     function handleSubmit(e) {
         e.preventDefault();
-        const topicRef = firebase.database().ref('topics').push();
-        topicRef.set({
-            name,
-            slug,
-            meta
-        });
+        if (name && slug && meta) {
+            const topicRef = firebase
+                .database()
+                .ref('topics')
+                .push();
+            topicRef.set({
+                name,
+                slug,
+                meta
+            });
+            setError('');
+        } else {
+            setError('All fields are required');
+        }
     }
 
     function handleNameChange(e) {
@@ -28,17 +38,44 @@ export default function CreateTopic() {
         setMeta(e.target.value);
     }
 
+    function handleMessageClose() {
+        setError('');
+    }
+
+    let messageProps = {};
+    if (error) {
+        messageProps = {
+            error: true,
+            text: error
+        };
+    }
+
     return (
         <div>
             <h1>Create Topic</h1>
             <form className="topic-form" onSubmit={handleSubmit}>
-                <input type="text" className="text" placeholder="Topic name" onChange={handleNameChange}></input>
-                <input type="text" className="text" placeholder="Slug" onChange={handleSlugChange}></input>
-                <textarea className="text" placeholder="Meta" onChange={handleMetaChange} />
+                <input
+                    type="text"
+                    className="text"
+                    placeholder="Topic name"
+                    onChange={handleNameChange}
+                />
+                <input
+                    type="text"
+                    className="text"
+                    placeholder="Slug"
+                    onChange={handleSlugChange}
+                />
+                <textarea
+                    className="text"
+                    placeholder="Meta"
+                    onChange={handleMetaChange}
+                />
                 <div className="topic-form__button">
                     <button className="button">Create</button>
                 </div>
             </form>
+            <Message {...messageProps} onClose={handleMessageClose} />
         </div>
     );
 }
