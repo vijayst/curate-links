@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import Menu from './Menu';
 import CreateTopic from './CreateTopic';
 import firebase from '../common/firebase';
+import Topic from './Topic';
 
 const initialItems = [
     {
@@ -46,8 +47,8 @@ export default function Admin(props) {
                 <Switch>
                     <Route path="/admin/topic/create" component={CreateTopic} />
                     <Route
-                        path="/admin/settings"
-                        render={() => <div>Settings</div>}
+                        path="/admin/topic/:topic"
+                        component={Topic}
                     />
                 </Switch>
             </main>
