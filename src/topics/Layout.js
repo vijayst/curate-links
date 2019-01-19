@@ -53,9 +53,6 @@ export default function Layout(props) {
                     />
                 </Switch>
             </main>
-            <footer className="topics__footer">
-                &copy;2019, All rights reserved
-            </footer>
         </div>
     );
 }

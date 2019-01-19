@@ -49,21 +49,21 @@ body {
     border-radius: $border-radius;
     border: none;
     margin-top: 0.8rem;
-    background-color: $color-button;
+    background-color: $color-primary;
     color: $color-white;
     cursor: pointer;
 
     &:focus {
-        background-color: $color-button;
+        background-color: $color-primary;
         outline: none;
     }
 
     &:hover {
-        background-color: $color-button-hover;
+        background-color: darken($color-primary, 10%);
     }
 
     &:active {
-        background-color: $color-button-active;
+        background-color: darken($color-primary, 20%);
         outline: none;
     }
 
@@ -90,16 +90,16 @@ body {
 }
 
 a {
-    color: $color-grey-48;
+    color: $color-primary;
     text-decoration: none;
 
     &:hover {
-        color: $color-grey-72;
+        color: darken($color-primary, 20%);
         text-decoration: underline;
     }
 
     &:active {
-        color: $color-black;
+        color: darken($color-primary, 30%);
     }
 }
 
