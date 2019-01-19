@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Menu from './Menu';
+import Menu from '../common/Menu';
 import CreateTopic from './CreateTopic';
 import CreateCategory from './CreateCategory';
 import EditCategory from './EditCategory';

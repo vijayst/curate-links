@@ -4,6 +4,7 @@ import Home from './home/Home';
 import Login from './auth/Login';
 import Admin from './admin/Admin';
 import history from './common/history';
+import Layout from './topics/Layout';
 import requireAuth from './auth/requireAuth';
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
         <Router history={history}>
             <Switch>
                 <Route path="/admin" component={requireAuth(Admin)} />
+                <Route path="/topics/:topic" component={Layout} />
                 <Route path="/login" component={Login} />
                 <Route path="/" component={Home} />
             </Switch>
