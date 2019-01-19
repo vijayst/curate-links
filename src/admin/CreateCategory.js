@@ -10,21 +10,24 @@ export default function CreateTopic(props) {
 
     function handleSubmit(e) {
         e.preventDefault();
+        const { topic } = props.match.params;
         if (name && slug && meta) {
-            const topicRef = firebase
+            const categoryRef = firebase
                 .database()
-                .ref(`topics/${slug}`);
-            topicRef.once('value', function(snapshot) {
+                .ref(`topics/${topic}/categories/${slug}`);
+            
+            categoryRef.once('value')
+            .then(snapshot => {
                 if (snapshot.exists()) {
                     setError('Slug is not unique');
                 } else {
-                    topicRef.set({
+                    categoryRef.set({
                         name,
                         slug,
                         meta
                     });
                     setError('');
-                    props.history.push(`/admin/topics/${slug}`);
+                    props.history.push(`/admin/topics/${topic}`);
                 }
             });
         } else {
@@ -58,12 +61,12 @@ export default function CreateTopic(props) {
 
     return (
         <div>
-            <h1>Create Topic</h1>
-            <form className="form form--topic" onSubmit={handleSubmit}>
+            <h1>Create Category</h1>
+            <form className="form form--category" onSubmit={handleSubmit}>
                 <input
                     type="text"
                     className="text"
-                    placeholder="Topic name"
+                    placeholder="Category name"
                     onChange={handleNameChange}
                 />
                 <input
