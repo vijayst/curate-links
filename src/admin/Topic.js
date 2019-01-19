@@ -42,6 +42,10 @@ export default function Topic(props) {
                 });
     }
 
+    function handleEdit(category) {
+        history.push(`/admin/topics/${topic}/categories/${category}`);
+    }
+
     function handleNavigate() {
         history.push(`/admin/topics/${topic}/categories/create`);
     }
@@ -69,7 +73,15 @@ export default function Topic(props) {
                                 <td>{c.name}</td>
                                 <td>{c.slug}</td>
                                 <td>{c.meta}</td>
-                                <td>Edit</td>
+                                <td><button
+                                        className="button"
+                                        onClick={handleEdit.bind(
+                                            this,
+                                            c.slug
+                                        )}
+                                    >
+                                        Edit
+                                    </button></td>
                                 <td>
                                     <button
                                         className="button"

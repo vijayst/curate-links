@@ -1,16 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import firebase from '../common/firebase';
 import Message from '../common/Message';
 
-export default function CreateCategory(props) {
+export default function EditCategory(props) {
     const [name, setName] = useState('');
     const [slug, setSlug] = useState('');
     const [meta, setMeta] = useState('');
     const [error, setError] = useState('');
 
+    const { topic, category } = props.match.params;
+
+    useEffect(() => {
+        const categoryRef = firebase
+                .database()
+                .ref(`topics/${topic}/categories/${category}`);
+        categoryRef.once('value')
+        .then(snapshot => {
+            setName(snapshot.child('name').val());
+            setSlug(category);
+            setMeta(snapshot.child('meta').val());
+        });
+    }, [topic, category]);
+
     function handleSubmit(e) {
         e.preventDefault();
-        const { topic } = props.match.params;
         if (name && slug && meta) {
             const categoryRef = firebase
                 .database()
@@ -18,7 +31,7 @@ export default function CreateCategory(props) {
             
             categoryRef.once('value')
             .then(snapshot => {
-                if (snapshot.exists()) {
+                if (snapshot.exists() && slug !== category) {
                     setError('Slug is not unique');
                 } else {
                     categoryRef.set({
@@ -61,27 +74,30 @@ export default function CreateCategory(props) {
 
     return (
         <div>
-            <h1>Create Category</h1>
+            <h1>Edit Category</h1>
             <form className="form form--category" onSubmit={handleSubmit}>
                 <input
                     type="text"
                     className="text"
                     placeholder="Category name"
                     onChange={handleNameChange}
+                    value={name}
                 />
                 <input
                     type="text"
                     className="text"
                     placeholder="Slug"
                     onChange={handleSlugChange}
+                    value={slug}
                 />
                 <textarea
                     className="text"
                     placeholder="Meta"
                     onChange={handleMetaChange}
+                    value={meta}
                 />
                 <div className="topic-form__button">
-                    <button className="button">Create</button>
+                    <button className="button">Update</button>
                 </div>
             </form>
             <Message {...messageProps} onClose={handleMessageClose} />

@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import Menu from './Menu';
 import CreateTopic from './CreateTopic';
 import CreateCategory from './CreateCategory';
+import EditCategory from './EditCategory';
 import firebase from '../common/firebase';
 import Topic from './Topic';
 
@@ -44,6 +45,7 @@ export default function Admin(props) {
                 <Switch>
                     <Route path="/admin/topics/create" component={CreateTopic} />
                     <Route path="/admin/topics/:topic/categories/create" component={CreateCategory} />
+                    <Route path="/admin/topics/:topic/categories/:category" component={EditCategory} />
                     <Route
                         path="/admin/topics/:topic"
                         component={Topic}
