@@ -16,6 +16,15 @@
         grid-column: 1 / 2;
         background-color: $color-bg;
 
+        &__topic {
+            margin-top: 4rem;
+            font-size: $font-xlarge;
+            text-align: center;
+            a {
+                text-decoration: none;
+            }
+        }
+
         .nav {
             margin-top: 4rem;
         }

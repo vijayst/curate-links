@@ -34,10 +34,10 @@ export default function Layout(props) {
 
     return (
         <div className="topics">
-            <header className="topics__header">
-                <Link to={`/topics/${topic}`}>{topicName}</Link>
-            </header>
             <aside className="topics__nav">
+                <div className="topics__nav__topic">
+                    <Link to={`/topics/${topic}`}>{topicName}</Link>
+                </div>
                 <Menu items={items} pathname={pathname} />
             </aside>
             <main className="topics__content">
