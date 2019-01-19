@@ -42,15 +42,15 @@ export default function Layout(props) {
             </aside>
             <main className="topics__content">
                 <Switch>
-                    <Route path="/topics/:topic" component={Topic} />
-                    <Route
-                        path="/topics/:topic/:category"
-                        component={Category}
-                    />
                     <Route
                         path="/topics/:topic/:category/:page"
                         component={Page}
                     />
+                    <Route
+                        path="/topics/:topic/:category"
+                        component={Category}
+                    />
+                    <Route path="/topics/:topic" render={props => <Topic {...props} name={topicName} />} />
                 </Switch>
             </main>
         </div>

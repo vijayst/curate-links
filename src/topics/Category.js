@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Topic() {
+export default function Category() {
     return (
         <h1>Category</h1>
     );
