@@ -4,7 +4,7 @@ import history from '../common/history';
 
 export default function Topic(props) {
     const [name, setName] = useState('');
-    const [categories, setCategories] = useState([]);
+    let [categories, setCategories] = useState([]);
 
     const { topic } = props.match.params;
 
@@ -28,6 +28,19 @@ export default function Topic(props) {
         },
         [topic]
     );
+
+    function handleDelete(category) {
+        firebase
+                .database()
+                .ref(`/topics/${topic}/categories/${category}`)
+                .remove()
+                .then(() => {
+                    categories = categories.slice();
+                    const index = categories.findIndex(c => c.slug === category);
+                    categories.splice(index, 1);
+                    setCategories(categories);
+                });
+    }
 
     function handleNavigate() {
         history.push(`/admin/topics/${topic}/categories/create`);
@@ -57,7 +70,17 @@ export default function Topic(props) {
                                 <td>{c.slug}</td>
                                 <td>{c.meta}</td>
                                 <td>Edit</td>
-                                <td>Delete</td>
+                                <td>
+                                    <button
+                                        className="button"
+                                        onClick={handleDelete.bind(
+                                            this,
+                                            c.slug
+                                        )}
+                                    >
+                                        Delete
+                                    </button>
+                                </td>
                             </tr>
                         ))
                     ) : (
