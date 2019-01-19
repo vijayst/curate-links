@@ -7,12 +7,8 @@ import Topic from './Topic';
 
 const initialItems = [
     {
-        path: '/admin/topic/create',
+        path: '/admin/topics/create',
         text: 'Create Topic'
-    },
-    {
-        path: '/admin/settings',
-        text: 'Settings'
     }
 ];
 
@@ -28,7 +24,7 @@ export default function Admin(props) {
                     const data = childSnapshot.val();
                     items.unshift({
                         text: data.name,
-                        path: `/admin/topic/${data.slug}`
+                        path: `/admin/topics/${data.slug}`
                     });
                     setItems(items);
                 });
@@ -45,9 +41,10 @@ export default function Admin(props) {
             </aside>
             <main className="admin__content">
                 <Switch>
-                    <Route path="/admin/topic/create" component={CreateTopic} />
+                    <Route path="/admin/topics/create" component={CreateTopic} />
+                    <Route path="/admin/topics/:topic/categories/create" component={CreateTopic} />
                     <Route
-                        path="/admin/topic/:topic"
+                        path="/admin/topics/:topic"
                         component={Topic}
                     />
                 </Switch>

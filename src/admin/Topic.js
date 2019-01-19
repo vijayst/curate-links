@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import firebase from '../common/firebase';
+import history from '../common/history';
 
 export default function Topic(props) {
     const [name, setName] = useState('');
+    const { topic } = props.match.params;
+
     useEffect(() => {
-        firebase.database().ref(`/topics/${props.match.params.topic}`).once('value', function(snapshot) {
+        firebase.database().ref(`/topics/${topic}`).once('value', function(snapshot) {
             setName(snapshot.val().name);
         });
-    }, []);
+    }, [topic]);
+
+    function handleNavigate() {
+        history.push(`/admin/topics/${topic}/categories/create`);
+    }
 
     return (
         <div className="topic">
             <h1>{name}</h1>
-            <button className="button topic__create">Create Category</button>
+            <button className="button topic__create" onClick={handleNavigate}>Create Category</button>
             <table className="topic__categories">
                 <thead>
                     <tr>
