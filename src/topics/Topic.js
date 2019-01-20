@@ -17,9 +17,7 @@ export default function Category(props) {
                 .once('value', snapshot => {
                     const links = [];
                     snapshot.forEach(c => {
-                        const timestamp = new Date(
-                            c.child('timestamp').val()
-                        );
+                        const timestamp = new Date(c.child('timestamp').val());
                         const formattedTime = new Intl.DateTimeFormat('en-US', {
                             year: 'numeric',
                             month: 'short',
@@ -47,9 +45,9 @@ export default function Category(props) {
 
     function handleClap(key, claps) {
         firebase
-        .database()
-        .ref(`/links/${key}/claps`)
-        .set(claps + 1);
+            .database()
+            .ref(`/links/${key}/claps`)
+            .set(claps + 1);
         links = links.slice();
         const index = links.findIndex(l => l.key === key);
         links[index] = {
@@ -80,12 +78,51 @@ export default function Category(props) {
                                 {link.claps} claps
                             </td>
                             <td className="topic__link__clap">
-                                <button className="link-button" onClick={handleClap.bind(this, link.key, link.claps)}>Clap</button>
+                                <button
+                                    className="link-button"
+                                    onClick={handleClap.bind(
+                                        this,
+                                        link.key,
+                                        link.claps
+                                    )}
+                                >
+                                    Clap
+                                </button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            <div className="topic__links--hidden mt24">
+                {links.map(link => (
+                    <div className="topic__grid" key={link.key}>
+                        <div className="topic__grid__timestamp">
+                            {link.formattedTime}
+                        </div>
+                        <div className="topic__grid__title">
+                            <Link to={link.internalUrl}>{link.title}</Link>
+                        </div>
+                        <div className="topic__grid__category">
+                            {link.categoryName}
+                        </div>
+                        <div className="topic__grid__claps">
+                            {link.claps} claps
+                        </div>
+                        <div className="topic__grid__clap">
+                            <button
+                                className="link-button"
+                                onClick={handleClap.bind(
+                                    this,
+                                    link.key,
+                                    link.claps
+                                )}
+                            >
+                                Clap
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }
