@@ -80,7 +80,7 @@ export default function CreateCategory(props) {
                     placeholder="Meta"
                     onChange={handleMetaChange}
                 />
-                <div className="topic-form__button">
+                <div className="form__button">
                     <button className="button">Create</button>
                 </div>
             </form>

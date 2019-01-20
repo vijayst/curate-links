@@ -96,7 +96,7 @@ export default function EditCategory(props) {
                     onChange={handleMetaChange}
                     value={meta}
                 />
-                <div className="topic-form__button">
+                <div className="form__button">
                     <button className="button">Update</button>
                 </div>
             </form>
