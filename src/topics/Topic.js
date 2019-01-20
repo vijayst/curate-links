@@ -45,6 +45,20 @@ export default function Category(props) {
         [topic]
     );
 
+    function handleClap(key, claps) {
+        firebase
+        .database()
+        .ref(`/links/${key}/claps`)
+        .set(claps + 1);
+        links = links.slice();
+        const index = links.findIndex(l => l.key === key);
+        links[index] = {
+            ...links[index],
+            claps: claps + 1
+        };
+        setLinks(links);
+    }
+
     return (
         <div className="topic">
             <h1>{name}</h1>
@@ -62,8 +76,11 @@ export default function Category(props) {
                             <td className="topic__link__category">
                                 {link.categoryName}
                             </td>
-                            <td className="topic__link__clap">
+                            <td className="topic__link__claps">
                                 {link.claps} claps
+                            </td>
+                            <td className="topic__link__clap">
+                                <button className="link-button" onClick={handleClap.bind(this, link.key, link.claps)}>Clap</button>
                             </td>
                         </tr>
                     ))}

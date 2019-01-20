@@ -1,0 +1,14 @@
+.link-button {
+    border: none;
+    outline: none;
+    color: $color-primary;
+    cursor: pointer;
+
+    &:hover {
+        color: darken($color-primary, 20%);
+    }
+
+    &:focus {
+        color: darken($color-primary, 30%);
+    }
+}
