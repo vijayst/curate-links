@@ -38,7 +38,8 @@ export default function CreateLink(props) {
                         url,
                         timestamp: Date.now(),
                         topic,
-                        category
+                        category,
+                        claps: 1
                     });
                     setError('');
                     setMessage('Link added, Thanks');
