@@ -25,6 +25,11 @@ export default function CreateLink(props) {
     function handleSubmit(e) {
         e.preventDefault();
         if (title && url) {
+            const regex = /https?:\/\/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+            if (!regex.test(url)) {
+                setError('URL is not valid');
+                return;
+            }
             const key = getKeyFromURL(url);
             const linkRef = firebase
                 .database()
