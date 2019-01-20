@@ -22,7 +22,7 @@ export default function Category(props) {
                 .database()
                 .ref('/links')
                 .orderByChild('category')
-                .equalTo(category)
+                .equalTo(`${topic}_${category}`)
                 .on('child_added', snapshot => {
                     links = links.slice();
                     let timestamp = new Date(snapshot.child('timestamp').val());
@@ -37,6 +37,7 @@ export default function Category(props) {
                         key: snapshot.key,
                         title: snapshot.child('title').val(),
                         url: snapshot.child('url').val(),
+                        claps: snapshot.child('claps').val(),
                         timestamp
                     });
                     setLinks(links);
@@ -48,18 +49,23 @@ export default function Category(props) {
     return (
         <div className="category">
             <h1>{name}</h1>
-            <CreateLink topic={topic} category={category} />
+            <CreateLink topic={topic} category={category} categoryName={name} />
             <h2 className="mt24">Latest Links</h2>
-            <ul className="category__links">
+            <table className="category__links">
+            <tbody>
                 {links.map(link => (
-                    <li key={link.key}>
-                        <span className="mr16">{link.timestamp}</span>
-                        <Link to={`/topics/${topic}/${category}/${link.key}`}>
-                            {link.title}
-                        </Link>
-                    </li>
+                    <tr className="category__link" key={link.key}>
+                        <td className="category__link__timestamp">{link.timestamp}</td>
+                        <td className="category__link__title">
+                            <Link to={`/topics/${topic}/${category}/${link.key}`}>
+                                {link.title}
+                            </Link>
+                        </td>
+                        <td className="category__link__clap">{link.claps} claps</td>
+                    </tr>
                 ))}
-            </ul>
+                </tbody>
+            </table>
         </div>
     );
 }

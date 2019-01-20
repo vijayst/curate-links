@@ -7,7 +7,7 @@ export default function CreateLink(props) {
     const [url, setURL] = useState('');
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
-    const { topic, category } = props;
+    const { topic, category, categoryName } = props;
 
     function getKeyFromURL(url) {
         let key = url
@@ -38,8 +38,9 @@ export default function CreateLink(props) {
                         url,
                         timestamp: Date.now(),
                         topic,
-                        category,
-                        claps: 1
+                        category: `${topic}_${category}`,
+                        categoryName, 
+                        claps: 10
                     });
                     setError('');
                     setMessage('Link added, Thanks');
