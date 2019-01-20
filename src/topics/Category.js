@@ -81,7 +81,7 @@ export default function Category(props) {
                 onAdd={handleAdd}
             />
             <h2 className="mt24">Latest Links</h2>
-            <table className="category__links">
+            <table className="category__links mt24">
                 <tbody>
                     {links.map(link => (
                         <tr className="category__link" key={link.key}>
@@ -110,7 +110,7 @@ export default function Category(props) {
                     ))}
                 </tbody>
             </table>
-            <div className="category__links--hidden">
+            <div className="category__links--hidden mt24">
                 {links.map(link => (
                     <div className="category__grid" key={link.key}>
                         <div className="category__grid__timestamp">

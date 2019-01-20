@@ -32,15 +32,15 @@ export default function Layout(props) {
                 });
             });
 
-        window.addEventListener('scroll', handleScroll);
-        handleScroll();
+        window.addEventListener('resize', handleResize);
+        handleResize();
 
         return () => {
-            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleResize);
         };
     }, []);
 
-    function handleScroll() {
+    function handleResize() {
         setShouldCollapse(window.innerWidth < 600);
     }
 
