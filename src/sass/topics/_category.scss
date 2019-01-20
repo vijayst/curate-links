@@ -2,7 +2,20 @@
     &__links {
         list-style: none;
         margin-top: 2.4rem;
+
+        &--hidden {
+            display: none;
+        }
+
+        @media screen and (max-width: 600px) {
+            display: none;
+
+            &--hidden {
+                display: block;
+            }
+        }
     }
+
 
     &__link {
         vertical-align: text-bottom;
@@ -26,6 +39,40 @@
             a {
                 font-size: $font-medium;
             }
+        }
+    }
+
+    &__grid {
+        display: grid;
+        width: 100%;
+        grid-template-rows: repeat(2, max-content);
+        grid-template-columns: repeat(4, 1fr);
+        margin-bottom: 2.4rem;
+        grid-row-gap: .8rem;
+        align-items: baseline;
+
+        &__timestamp {
+            grid-row: 1 / 2;
+            grid-column: 1 / 3;
+        }
+
+        &__claps {
+            grid-row: 1 / 2;
+            grid-column: 3 / 4;
+            color: $color-top;
+            justify-self: flex-end;
+        }
+
+        &__clap {
+            grid-row: 1 / 2;
+            grid-column: 4 / 5;
+            justify-self: flex-end;
+        }
+
+        &__title {
+            grid-row: 2 / 3;
+            grid-column: 1 / 5;
+            font-size: $font-medium;
         }
     }
 }

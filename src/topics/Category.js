@@ -26,9 +26,7 @@ export default function Category(props) {
                 .once('value', snapshot => {
                     const links = [];
                     snapshot.forEach(c => {
-                        const timestamp = new Date(
-                            c.child('timestamp').val()
-                        );
+                        const timestamp = new Date(c.child('timestamp').val());
                         const formattedTime = new Intl.DateTimeFormat('en-US', {
                             year: 'numeric',
                             month: 'short',
@@ -61,9 +59,9 @@ export default function Category(props) {
 
     function handleClap(key, claps) {
         firebase
-        .database()
-        .ref(`/links/${key}/claps`)
-        .set(claps + 1);
+            .database()
+            .ref(`/links/${key}/claps`)
+            .set(claps + 1);
         links = links.slice();
         const index = links.findIndex(l => l.key === key);
         links[index] = {
@@ -76,7 +74,12 @@ export default function Category(props) {
     return (
         <div className="category">
             <h1>{name}</h1>
-            <CreateLink topic={topic} category={category} categoryName={name} onAdd={handleAdd} />
+            <CreateLink
+                topic={topic}
+                category={category}
+                categoryName={name}
+                onAdd={handleAdd}
+            />
             <h2 className="mt24">Latest Links</h2>
             <table className="category__links">
                 <tbody>
@@ -92,12 +95,48 @@ export default function Category(props) {
                                 {link.claps} claps
                             </td>
                             <td className="category__link__clap">
-                                <button className="link-button" onClick={handleClap.bind(this, link.key, link.claps)}>Clap</button>
+                                <button
+                                    className="link-button"
+                                    onClick={handleClap.bind(
+                                        this,
+                                        link.key,
+                                        link.claps
+                                    )}
+                                >
+                                    Clap
+                                </button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            <div className="category__links--hidden">
+                {links.map(link => (
+                    <div className="category__grid" key={link.key}>
+                        <div className="category__grid__timestamp">
+                            {link.formattedTime}
+                        </div>
+                        <div className="category__grid__title">
+                            <Link to={link.internalUrl}>{link.title}</Link>
+                        </div>
+                        <div className="category__grid__claps">
+                            {link.claps} claps
+                        </div>
+                        <div className="category__grid__clap">
+                            <button
+                                className="link-button"
+                                onClick={handleClap.bind(
+                                    this,
+                                    link.key,
+                                    link.claps
+                                )}
+                            >
+                                Clap
+                            </button>
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 }
