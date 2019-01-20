@@ -7,14 +7,26 @@
     &__header {
         flex: 0 0 8rem;
         background-color: $color-top;
-
+        padding: 1.6rem;
         display: flex;
         align-items: baseline;
 
+        @media screen and (max-width: 960px) {
+            justify-content: center;
+
+            &__title {
+                display: none;
+            }
+        }   
+
         &__title {
             flex: 1;
-            padding: 2rem;
-            font-size: $font-xlarge;
+            
+            font-size: $font-large;
+
+            @media screen and (max-width: 1200px) {
+                font-size: $font-medium;
+            }
         }
 
         &__claps {
