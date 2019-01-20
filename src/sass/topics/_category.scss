@@ -1,0 +1,23 @@
+.category {
+    &__links {
+        list-style: none;
+        margin-top: 2.4rem;
+
+        li {
+            margin-bottom: 1rem;
+
+            a {
+                font-size: $font-medium;
+                color: $color-secondary;
+
+                &:hover {
+                    color: darken($color-secondary, 10%);
+                }
+
+                &:active {
+                    color: darken($color-secondary, 20%);
+                }
+            }
+        }
+    }
+}

@@ -25,11 +25,19 @@ export default function Category(props) {
                 .equalTo(category)
                 .on('child_added', snapshot => {
                     links = links.slice();
+                    let timestamp = new Date(snapshot.child('timestamp').val());
+                    timestamp = new Intl.DateTimeFormat('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric'
+                    }).format(timestamp);
                     links.unshift({
                         key: snapshot.key,
                         title: snapshot.child('title').val(),
                         url: snapshot.child('url').val(),
-                        timestamp: snapshot.child('timestamp').val()
+                        timestamp
                     });
                     setLinks(links);
                 });
@@ -38,12 +46,14 @@ export default function Category(props) {
     );
 
     return (
-        <div>
+        <div className="category">
             <h1>{name}</h1>
             <CreateLink topic={topic} category={category} />
-            <ul>
+            <h2 className="mt24">Latest Links</h2>
+            <ul className="category__links">
                 {links.map(link => (
                     <li key={link.key}>
+                        <span className="mr16">{link.timestamp}</span>
                         <Link to={`/topics/${topic}/${category}/${link.key}`}>
                             {link.title}
                         </Link>
