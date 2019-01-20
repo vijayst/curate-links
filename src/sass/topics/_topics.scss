@@ -4,8 +4,26 @@
     min-height: 100vh;
 
     &__nav {
+        transition: flex-basis 0.3ms ease-in-out;
         flex: 0 0 24rem;
         background-color: $color-bg;
+
+        svg {
+            fill: $color-primary;
+        }
+
+        &--collapse {
+            padding-top: 5.6rem;
+            text-align: center;
+        }
+
+        @media screen and (max-width: 900px) {
+            flex: 0 0 8rem;
+        }
+
+        @media screen and (max-width: 600px) {
+            flex: 0 0 3.2rem;
+        }
 
         &__topic {
             margin-top: 4rem;
@@ -13,6 +31,7 @@
             text-align: center;
             a {
                 text-decoration: none;
+                margin-right: 1.6rem;
             }
         }
 

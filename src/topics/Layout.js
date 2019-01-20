@@ -6,9 +6,12 @@ import Topic from './Topic';
 import Category from './Category';
 import Page from './Page';
 import { Link } from 'react-router-dom';
+import Expand from './Expand';
 
 export default function Layout(props) {
     const [topicName, setTopicName] = useState('');
+    const [shouldCollapse, setShouldCollapse] = useState(false);
+    const [collapsed, setCollapsed] = useState(true);
     let [items, setItems] = useState([]);
     const { topic } = props.match.params;
 
@@ -28,18 +31,41 @@ export default function Layout(props) {
                     setItems(items);
                 });
             });
+
+        window.addEventListener('scroll', handleScroll);
+        handleScroll();
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
     }, []);
+
+    function handleScroll() {
+        setShouldCollapse(window.innerWidth < 600);
+    }
+
+    function handleExpand() {
+        setCollapsed(!collapsed);
+    }
 
     const { pathname } = props.location;
 
     return (
         <div className="topics">
-            <aside className="topics__nav">
-                <div className="topics__nav__topic">
-                    <Link to={`/topics/${topic}`}>{topicName}</Link>
-                </div>
-                <Menu items={items} pathname={pathname} />
-            </aside>
+            {shouldCollapse && collapsed ? (
+                <aside className="topics__nav topics__nav--collapse">
+                    <Expand onClick={handleExpand} />
+                </aside>
+            ) : (
+                <aside className="topics__nav">
+                    <div className="topics__nav__topic">
+                        <Link to={`/topics/${topic}`}>{topicName}</Link>
+                        {shouldCollapse && <Expand onClick={handleExpand} />}
+                    </div>
+                    <Menu items={items} pathname={pathname} />
+                </aside>
+            )}
+
             <main className="topics__content">
                 <Switch>
                     <Route
@@ -50,7 +76,10 @@ export default function Layout(props) {
                         path="/topics/:topic/:category"
                         component={Category}
                     />
-                    <Route path="/topics/:topic" render={props => <Topic {...props} name={topicName} />} />
+                    <Route
+                        path="/topics/:topic"
+                        render={props => <Topic {...props} name={topicName} />}
+                    />
                 </Switch>
             </main>
         </div>
