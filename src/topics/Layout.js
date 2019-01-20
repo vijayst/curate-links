@@ -6,7 +6,6 @@ import Topic from './Topic';
 import Category from './Category';
 import Page from './Page';
 import { Link } from 'react-router-dom';
-import Header from './Header';
 
 export default function Layout(props) {
     const [topicName, setTopicName] = useState('');
