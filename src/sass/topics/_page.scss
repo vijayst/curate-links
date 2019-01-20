@@ -1,0 +1,44 @@
+.page {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    margin: -4rem;
+
+    &__header {
+        flex: 0 0 8rem;
+        background-color: $color-top;
+
+        display: flex;
+        align-items: baseline;
+
+        &__title {
+            flex: 1;
+            padding: 2rem;
+            font-size: $font-xlarge;
+        }
+
+        &__claps {
+            color: $color-secondary;
+            font-size: $font-medium;
+            margin-right: 1.6rem;
+        }
+
+        &__clap {
+            margin-right: 1.6rem;
+        }
+
+        &__visit {
+            margin-right: 1.6rem;
+        }
+    }
+
+    &__content {
+        flex: 1;
+
+        iframe {
+            width: 100%;
+            height: calc(100vh - 8rem);
+            border: none;
+        }
+    }
+}
