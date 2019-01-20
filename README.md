@@ -1,8 +1,8 @@
 ## Curate Links
-* Create a topic with categories and subcategories
+
+* Create a topic with categories
 * Allow user to add links
 * Allow user to clap for links
-* Allow user to add new subcategory
-* View pages for Topic, category, subcategory
+* View pages for Topic, category, links
 
 Also, the app for https://curatelinks.com
