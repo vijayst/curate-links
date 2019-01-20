@@ -38,6 +38,7 @@ export default function Category(props) {
                         title: snapshot.child('title').val(),
                         url: snapshot.child('url').val(),
                         claps: snapshot.child('claps').val(),
+                        internalUrl: snapshot.child('internalUrl').val(),
                         timestamp
                     });
                     setLinks(links);
@@ -57,7 +58,7 @@ export default function Category(props) {
                     <tr className="category__link" key={link.key}>
                         <td className="category__link__timestamp">{link.timestamp}</td>
                         <td className="category__link__title">
-                            <Link to={`/topics/${topic}/${category}/${link.key}`}>
+                            <Link to={link.internalUrl}>
                                 {link.title}
                             </Link>
                         </td>

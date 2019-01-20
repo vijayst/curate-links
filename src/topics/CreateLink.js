@@ -36,6 +36,7 @@ export default function CreateLink(props) {
                     linkRef.set({
                         title,
                         url,
+                        internalUrl: `/topics/${topic}/${category}/${key}`,
                         timestamp: Date.now(),
                         topic,
                         category: `${topic}_${category}`,

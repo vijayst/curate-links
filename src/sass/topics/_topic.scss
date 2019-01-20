@@ -1,0 +1,30 @@
+.topic {
+    &__links {
+        list-style: none;
+        margin-top: 2.4rem;
+    }
+
+    &__link {
+        vertical-align: text-bottom;
+        
+        &__timestamp {
+            width: 12rem;
+        }
+
+        &__clap {
+            color: $color-top;
+        }
+
+        &__category {
+            width: 12rem;
+            font-size: $font-medium;
+        }
+
+        &__title {
+            width: 60rem;
+            a {
+                font-size: $font-medium;
+            }
+        }
+    }
+}
