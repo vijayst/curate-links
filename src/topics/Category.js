@@ -23,48 +23,62 @@ export default function Category(props) {
                 .ref('/links')
                 .orderByChild('category')
                 .equalTo(`${topic}_${category}`)
-                .on('child_added', snapshot => {
-                    links = links.slice();
-                    let timestamp = new Date(snapshot.child('timestamp').val());
-                    timestamp = new Intl.DateTimeFormat('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                        hour: 'numeric',
-                        minute: 'numeric'
-                    }).format(timestamp);
-                    links.unshift({
-                        key: snapshot.key,
-                        title: snapshot.child('title').val(),
-                        url: snapshot.child('url').val(),
-                        claps: snapshot.child('claps').val(),
-                        internalUrl: snapshot.child('internalUrl').val(),
-                        timestamp
+                .once('value', snapshot => {
+                    const links = [];
+                    snapshot.forEach(c => {
+                        const timestamp = new Date(
+                            c.child('timestamp').val()
+                        );
+                        const formattedTime = new Intl.DateTimeFormat('en-US', {
+                            year: 'numeric',
+                            month: 'short',
+                            day: 'numeric',
+                            hour: 'numeric',
+                            minute: 'numeric'
+                        }).format(timestamp);
+                        links.unshift({
+                            key: c.key,
+                            title: c.child('title').val(),
+                            url: c.child('url').val(),
+                            claps: c.child('claps').val(),
+                            internalUrl: c.child('internalUrl').val(),
+                            timestamp,
+                            formattedTime
+                        });
                     });
+                    links.sort((a, b) => b.timestamp - a.timestamp);
                     setLinks(links);
                 });
         },
         [category]
     );
 
+    function handleAdd(link) {
+        links = links.slice();
+        links.unshift(link);
+        setLinks(links);
+    }
+
     return (
         <div className="category">
             <h1>{name}</h1>
-            <CreateLink topic={topic} category={category} categoryName={name} />
+            <CreateLink topic={topic} category={category} categoryName={name} onAdd={handleAdd} />
             <h2 className="mt24">Latest Links</h2>
             <table className="category__links">
-            <tbody>
-                {links.map(link => (
-                    <tr className="category__link" key={link.key}>
-                        <td className="category__link__timestamp">{link.timestamp}</td>
-                        <td className="category__link__title">
-                            <Link to={link.internalUrl}>
-                                {link.title}
-                            </Link>
-                        </td>
-                        <td className="category__link__clap">{link.claps} claps</td>
-                    </tr>
-                ))}
+                <tbody>
+                    {links.map(link => (
+                        <tr className="category__link" key={link.key}>
+                            <td className="category__link__timestamp">
+                                {link.formattedTime}
+                            </td>
+                            <td className="category__link__title">
+                                <Link to={link.internalUrl}>{link.title}</Link>
+                            </td>
+                            <td className="category__link__clap">
+                                {link.claps} claps
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </div>

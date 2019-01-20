@@ -7,7 +7,7 @@ export default function CreateLink(props) {
     const [url, setURL] = useState('');
     const [error, setError] = useState('');
     const [message, setMessage] = useState('');
-    const { topic, category, categoryName } = props;
+    const { topic, category, categoryName, onAdd } = props;
 
     function getKeyFromURL(url) {
         let key = url
@@ -38,16 +38,35 @@ export default function CreateLink(props) {
                 if (snapshot.exists()) {
                     setError('Link already exists');
                 } else {
+                    const timestamp = Date.now();
+                    const formattedTime = new Intl.DateTimeFormat('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric'
+                    }).format(timestamp);
+
                     linkRef.set({
                         title,
                         url,
                         internalUrl: `/topics/${topic}/${category}/${key}`,
-                        timestamp: Date.now(),
+                        timestamp,
                         topic,
                         category: `${topic}_${category}`,
                         categoryName, 
                         claps: 10
                     });
+                    onAdd({
+                        key: key,
+                        title,
+                        url,
+                        claps: 10,
+                        internalUrl: `/topics/${topic}/${category}/${key}`,
+                        timestamp,
+                        formattedTime
+                    });
+                    
                     setError('');
                     setMessage('Link added, Thanks');
                     setTitle('');
