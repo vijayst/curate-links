@@ -3,6 +3,7 @@
     outline: none;
     color: $color-primary;
     cursor: pointer;
+    background-color: white;
 
     &:hover {
         color: darken($color-primary, 20%);
