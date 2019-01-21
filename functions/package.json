@@ -5,9 +5,10 @@
     "deploy": "firebase deploy --only functions"
   },
   "dependencies": {
-    "firebase-functions": "^2.1.0"
+    "axios": "^0.18.0",
+    "firebase-functions": "^2.1.0",
+    "firebase-admin": "~6.0.0"
   },
-  "devDependencies": {
-  },
+  "devDependencies": {},
   "private": true
 }
