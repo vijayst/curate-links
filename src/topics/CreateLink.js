@@ -1,85 +1,56 @@
 import React, { useState } from 'react';
 import firebase from '../common/firebase';
+import LinkBox from '../common/LinkBox';
 import Message from '../common/Message';
 
 export default function CreateLink(props) {
-    const [title, setTitle] = useState('');
     const [url, setURL] = useState('');
-    const [error, setError] = useState('');
-    const [message, setMessage] = useState('');
+    const [disabled, setDisabled] = useState(true);
     const { topic, category, categoryName, onAdd } = props;
+    const [message, setMessage] = useState('');
 
-    function getKeyFromURL(url) {
-        let key = url
-        .replace('https://', '')
-        .replace('http://', '')
-        .replace(/\./g, '_')
-        .replace(/\//g, '__');
-        const end = key.indexOf('?');
-        if (end > 0) {
-            key = key.substring(0, end);
-        }
-        return key;
-    }
+    let submitProps;
 
     function handleSubmit(e) {
+        const { key, title, url } = submitProps;
         e.preventDefault();
-        if (title && url) {
-            const regex = /https?:\/\/[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
-            if (!regex.test(url)) {
-                setError('URL is not valid');
-                return;
-            }
-            const key = getKeyFromURL(url);
-            const linkRef = firebase
-                .database()
-                .ref(`links/${key}`);
-            linkRef.once('value', function(snapshot) {
-                if (snapshot.exists()) {
-                    setError('Link already exists');
-                } else {
-                    const timestamp = Date.now();
-                    const formattedTime = new Intl.DateTimeFormat('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                        hour: 'numeric',
-                        minute: 'numeric'
-                    }).format(timestamp);
+        const linkRef = firebase.database().ref(`links/${key}`);
+        const timestamp = Date.now();
+        const formattedTime = new Intl.DateTimeFormat('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric'
+        }).format(timestamp);
 
-                    linkRef.set({
-                        title,
-                        url,
-                        internalUrl: `/topics/${topic}/${category}/${key}`,
-                        timestamp,
-                        topic,
-                        category: `${topic}_${category}`,
-                        categoryName, 
-                        claps: 10
-                    });
-                    onAdd({
-                        key: key,
-                        title,
-                        url,
-                        claps: 10,
-                        internalUrl: `/topics/${topic}/${category}/${key}`,
-                        timestamp,
-                        formattedTime
-                    });
-                    
-                    setError('');
-                    setMessage('Link added, Thanks');
-                    setTitle('');
-                    setURL('');
-                }
-            });
-        } else {
-            setError('All fields are required');
-        }
+        linkRef.set({
+            title,
+            url,
+            internalUrl: `/topics/${topic}/${category}/${key}`,
+            timestamp,
+            topic,
+            category: `${topic}_${category}`,
+            categoryName,
+            claps: 10
+        });
+        onAdd({
+            key: key,
+            title,
+            url,
+            claps: 10,
+            internalUrl: `/topics/${topic}/${category}/${key}`,
+            timestamp,
+            formattedTime
+        });
+
+        setMessage('Link added, Thanks');
+        setURL('');
     }
 
-    function handleTitleChange(e) {
-        setTitle(e.target.value);
+    function handleReady(props) {
+        submitProps = props;
+        setDisabled(false);
     }
 
     function handleURLChange(e) {
@@ -87,47 +58,25 @@ export default function CreateLink(props) {
     }
 
     function handleMessageClose() {
-        setError('');
         setMessage('');
-    }
-
-    let messageProps = {};
-    if (error) {
-        messageProps = {
-            error: true,
-            text: error
-        };
-    }
-    if (message) {
-        messageProps = {
-            error: false,
-            text: message
-        };
     }
 
     return (
         <div className="mt24">
             <h2>Add a link</h2>
             <form className="form form--link" onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    className="text"
-                    placeholder="Title"
-                    onChange={handleTitleChange}
-                    value={title}
-                />
-                <input
-                    type="text"
-                    className="text"
-                    placeholder="URL"
+                <LinkBox
+                    url={url}
                     onChange={handleURLChange}
-                    value={url}
+                    onReady={handleReady}
                 />
                 <div className="form__button">
-                    <button className="button">Create</button>
+                    <button className="button" disabled={disabled}>
+                        Create
+                    </button>
                 </div>
             </form>
-            <Message {...messageProps} onClose={handleMessageClose} />
+            <Message text={message} onClose={handleMessageClose} />
         </div>
     );
 }
