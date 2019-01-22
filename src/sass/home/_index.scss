@@ -1,9 +1,14 @@
 .home {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 100vh;
     background-color: $color-bg;
+
+    &__main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 70vh;
+        padding: 2rem;
+    }
 
     &__circle {
         background-color: $color-top;
@@ -26,7 +31,7 @@
         display: grid;
         grid-template-columns: 16rem 16rem;
         grid-row-gap: 3.2rem;
-        
+
         @media screen and (max-width: 600px) {
             padding: 4rem;
         }
@@ -58,6 +63,49 @@
             justify-self: flex-start;
             align-self: center;
             padding: 2.4rem;
+        }
+    }
+
+    &__benefits {
+        display: flex;
+        width: 100%;
+        padding: 5rem 20%;
+        background-color: white;
+        min-height: 30vh;
+
+        @media screen and (max-width: 1500px) {
+            padding: 5rem 10%;
+        }
+
+        @media screen and (max-width: 1100px) {
+            padding: 5rem;
+        }
+
+        @media screen and (max-width: 840px) {
+            display: block;
+            padding: 5rem;
+        }
+    }
+
+    &__benefit {
+        flex: 1;
+        background-color: #eeeeee;
+        border-radius: 5px;
+        padding: 2.4rem;
+        font-size: $font-medium;
+        line-height: 1.5;
+
+        &:not(:last-child) {
+            margin-right: 10rem;
+
+            @media screen and (max-width: 1100px) {
+                margin-right: 5rem;
+            }
+
+            @media screen and (max-width: 840px) {
+                margin-right: 0;
+                margin-bottom: 5rem;
+            }
         }
     }
 }
