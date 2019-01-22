@@ -1,16 +1,30 @@
 import React, { useState } from 'react';
 import firebase from '../common/firebase';
 import Message from '../common/Message';
+import LinkBox from '../common/LinkBox';
+
+let submitProps;
 
 export default function CreateTopic(props) {
     const [name, setName] = useState('');
     const [slug, setSlug] = useState('');
-    const [meta, setMeta] = useState('');
+    const [url, setURL] = useState('');
     const [error, setError] = useState('');
+    const [disabled, setDisabled] = useState(false);
+
+    function handleChange(e) {
+        setURL(e.target.value);
+        setDisabled(true);
+    }
+
+    function handleReady(props) {
+        submitProps = props;
+        setDisabled(false);
+    }
 
     function handleSubmit(e) {
         e.preventDefault();
-        if (name && slug && meta) {
+        if (name && slug) {
             const topicRef = firebase
                 .database()
                 .ref(`topics/${slug}`);
@@ -18,10 +32,14 @@ export default function CreateTopic(props) {
                 if (snapshot.exists()) {
                     setError('Slug is not unique');
                 } else {
+                    const { url, title, description, image } = submitProps;
                     topicRef.set({
                         name,
                         slug,
-                        meta
+                        url,
+                        title,
+                        description,
+                        image
                     });
                     setError('');
                     props.history.push(`/admin/topics/${slug}`);
@@ -38,10 +56,6 @@ export default function CreateTopic(props) {
 
     function handleSlugChange(e) {
         setSlug(e.target.value);
-    }
-
-    function handleMetaChange(e) {
-        setMeta(e.target.value);
     }
 
     function handleMessageClose() {
@@ -72,13 +86,13 @@ export default function CreateTopic(props) {
                     placeholder="Slug"
                     onChange={handleSlugChange}
                 />
-                <textarea
-                    className="text"
-                    placeholder="Meta"
-                    onChange={handleMetaChange}
+                <LinkBox 
+                    url={url}
+                    onChange={handleChange}
+                    onReady={handleReady}
                 />
                 <div className="form__button">
-                    <button className="button">Create</button>
+                    <button className="button" disabled={disabled}>Create</button>
                 </div>
             </form>
             <Message {...messageProps} onClose={handleMessageClose} />

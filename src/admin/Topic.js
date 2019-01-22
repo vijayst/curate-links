@@ -20,7 +20,7 @@ export default function Topic(props) {
                         categories.push({
                             name: s.child('name').val(),
                             slug: s.child('slug').val(),
-                            meta: s.child('meta').val()
+                            description: s.child('description').val()
                         });
                     });
                     setCategories(categories);
@@ -61,7 +61,7 @@ export default function Topic(props) {
                     <tr>
                         <th>Name</th>
                         <th>Slug</th>
-                        <th>Meta</th>
+                        <th>Description</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -72,7 +72,7 @@ export default function Topic(props) {
                             <tr key={c.slug}>
                                 <td>{c.name}</td>
                                 <td>{c.slug}</td>
-                                <td>{c.meta}</td>
+                                <td>{c.description}</td>
                                 <td><button
                                         className="button"
                                         onClick={handleEdit.bind(

@@ -39,7 +39,11 @@ export default function LinkBox(props) {
                 } else {
                     let iframe;
                     axios
-                        .get(`${process.env.REACT_APP_FUNCTIONS_URL}valid?url=${url}`)
+                        .get(
+                            `${
+                                process.env.REACT_APP_FUNCTIONS_URL
+                            }valid?url=${url}`
+                        )
                         .then(response => {
                             const { valid } = response.data;
                             if (!valid) {
@@ -47,12 +51,17 @@ export default function LinkBox(props) {
                             } else {
                                 ({ iframe } = response.data);
                                 return axios.get(
-                                    `${process.env.REACT_APP_FUNCTIONS_URL}meta?url=${url}`
+                                    `${
+                                        process.env.REACT_APP_FUNCTIONS_URL
+                                    }meta?url=${url}`
                                 );
                             }
                         })
                         .then(response => {
-                            const { title, description, image } = response.data;
+                            let { title, description, image } = response.data;
+                            if (image && image.indexOf('https') === -1) {
+                                image = url + image;
+                            }
                             onReady({
                                 url,
                                 key,
@@ -96,12 +105,18 @@ export default function LinkBox(props) {
             </button>
             {visible && (
                 <Fragment>
-                    <img className="linkbox__img" alt="URL Preview" src={image} />
+                    {image && (
+                        <img
+                            className="linkbox__img"
+                            alt="URL Preview"
+                            src={image}
+                        />
+                    )}
                     <div className="linkbox__title">{title}</div>
                     <div className="linkbox__meta">{description}</div>
                 </Fragment>
             )}
-            <Message text={error} error  onClose={handleMessageClose} />
+            <Message text={error} error onClose={handleMessageClose} />
         </div>
     );
 }

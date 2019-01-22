@@ -1,46 +1,76 @@
 import React, { useState, useEffect } from 'react';
 import firebase from '../common/firebase';
 import Message from '../common/Message';
+import LinkBox from '../common/LinkBox';
+
+let submitProps;
+let oldURL;
 
 export default function EditCategory(props) {
     const [name, setName] = useState('');
     const [slug, setSlug] = useState('');
-    const [meta, setMeta] = useState('');
+    const [url, setURL] = useState('');
     const [error, setError] = useState('');
+    const [disabled, setDisabled] = useState(false);
+
+    function handleChange(e) {
+        setURL(e.target.value);
+        setDisabled(true);
+    }
+
+    function handleReady(props) {
+        submitProps = props;
+        setDisabled(false);
+    }
 
     const { topic, category } = props.match.params;
 
-    useEffect(() => {
-        const categoryRef = firebase
+    useEffect(
+        () => {
+            const categoryRef = firebase
                 .database()
                 .ref(`topics/${topic}/categories/${category}`);
-        categoryRef.once('value')
-        .then(snapshot => {
-            setName(snapshot.child('name').val());
-            setSlug(category);
-            setMeta(snapshot.child('meta').val());
-        });
-    }, [topic, category]);
+            categoryRef.once('value').then(snapshot => {
+                setName(snapshot.child('name').val());
+                setSlug(category);
+                oldURL = snapshot.child('url').val();
+                setURL(oldURL);
+            });
+        },
+        [topic, category]
+    );
 
     function handleSubmit(e) {
         e.preventDefault();
-        if (name && slug && meta) {
+        if (name && slug) {
             const categoryRef = firebase
                 .database()
                 .ref(`topics/${topic}/categories/${slug}`);
-            
-            categoryRef.once('value')
-            .then(snapshot => {
+
+            categoryRef.once('value').then(snapshot => {
                 if (snapshot.exists() && slug !== category) {
                     setError('Slug is not unique');
                 } else {
-                    categoryRef.set({
-                        name,
-                        slug,
-                        meta
-                    });
-                    setError('');
-                    props.history.push(`/admin/topics/${topic}`);
+                    if (oldURL === url) {
+                        categoryRef.set({
+                            name,
+                            slug
+                        });
+                    } else if (!submitProps) {
+                        setError('Fetch the new URL to update');
+                    } else {
+                        const { url, title, description, image } = submitProps;
+                        categoryRef.set({
+                            name,
+                            slug,
+                            title,
+                            description,
+                            image,
+                            url
+                        });
+                        setError('');
+                        props.history.push(`/admin/topics/${topic}`);
+                    }
                 }
             });
         } else {
@@ -54,10 +84,6 @@ export default function EditCategory(props) {
 
     function handleSlugChange(e) {
         setSlug(e.target.value);
-    }
-
-    function handleMetaChange(e) {
-        setMeta(e.target.value);
     }
 
     function handleMessageClose() {
@@ -90,14 +116,15 @@ export default function EditCategory(props) {
                     onChange={handleSlugChange}
                     value={slug}
                 />
-                <textarea
-                    className="text"
-                    placeholder="Meta"
-                    onChange={handleMetaChange}
-                    value={meta}
+                <LinkBox
+                    url={url}
+                    onChange={handleChange}
+                    onReady={handleReady}
                 />
                 <div className="form__button">
-                    <button className="button">Update</button>
+                    <button className="button" disabled={disabled}>
+                        Update
+                    </button>
                 </div>
             </form>
             <Message {...messageProps} onClose={handleMessageClose} />
