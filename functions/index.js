@@ -3,6 +3,8 @@ const axios = require('axios');
 const urlMetadata = require('url-metadata');
 
 exports.valid = functions.https.onRequest((request, response) => {
+    response.set('Access-Control-Allow-Origin', "*")
+    response.set('Access-Control-Allow-Methods', 'GET, POST')
     const url = request.query.url || request.body.url;
     if (!url) {
         response.status(400).send('URL is required');
@@ -25,6 +27,8 @@ exports.valid = functions.https.onRequest((request, response) => {
 });
 
 exports.meta = functions.https.onRequest((request, response) => {
+    response.set('Access-Control-Allow-Origin', "*")
+    response.set('Access-Control-Allow-Methods', 'GET, POST')
     const url = request.query.url || request.body.url;
     if (!url) {
         response.status(400).send('URL is required');

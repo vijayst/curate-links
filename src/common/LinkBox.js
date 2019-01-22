@@ -6,7 +6,7 @@ import axios from 'axios';
 export default function LinkBox(props) {
     const [visible, setVisible] = useState(false);
     const [title, setTitle] = useState('');
-    const [meta, setMeta] = useState('');
+    const [description, setDescription] = useState('');
     const [image, setImage] = useState('');
     const [error, setError] = useState('');
     const { url, onReady, onChange } = props;
@@ -39,7 +39,7 @@ export default function LinkBox(props) {
                 } else {
                     let iframe;
                     axios
-                        .get(`${process.env.REACT_APP_FUNCTIONS_URL}valid`)
+                        .get(`${process.env.REACT_APP_FUNCTIONS_URL}valid?url=${url}`)
                         .then(response => {
                             const { valid } = response.data;
                             if (!valid) {
@@ -47,23 +47,23 @@ export default function LinkBox(props) {
                             } else {
                                 ({ iframe } = response.data);
                                 return axios.get(
-                                    `${process.env.REACT_APP_FUNCTIONS_URL}meta`
+                                    `${process.env.REACT_APP_FUNCTIONS_URL}meta?url=${url}`
                                 );
                             }
                         })
                         .then(response => {
-                            const { title, meta, image } = response.data;
+                            const { title, description, image } = response.data;
                             onReady({
                                 url,
                                 key,
                                 title,
-                                meta,
+                                description,
                                 image,
                                 iframe
                             });
                             setVisible(true);
                             setTitle(title);
-                            setMeta(meta);
+                            setDescription(description);
                             setImage(image);
                             setError('');
                         });
@@ -83,7 +83,7 @@ export default function LinkBox(props) {
             <input
                 type="text"
                 className="text linkbox__url"
-                placeholder="URL"
+                placeholder="https://www.google.com"
                 readOnly={visible}
                 value={url}
                 onChange={onChange}
@@ -100,7 +100,7 @@ export default function LinkBox(props) {
                 <Fragment>
                     <img className="linkbox__img" alt="URL Preview" src={image} />
                     <div className="linkbox__title">{title}</div>
-                    <div className="linkbox__meta">{meta}</div>
+                    <div className="linkbox__meta">{description}</div>
                 </Fragment>
             )}
             <Message text={error} error  onClose={handleMessageClose} />
