@@ -18,7 +18,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "firebase deploy --project curate-links"
+    "deploy": "firebase deploy --project curate-links --only hosting"
   },
   "eslintConfig": {
     "extends": "react-app"
