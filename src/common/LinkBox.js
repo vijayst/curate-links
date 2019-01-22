@@ -84,7 +84,6 @@ export default function LinkBox(props) {
                 type="text"
                 className="text linkbox__url"
                 placeholder="https://www.google.com"
-                readOnly={visible}
                 value={url}
                 onChange={onChange}
             />
@@ -92,7 +91,6 @@ export default function LinkBox(props) {
                 type="button"
                 className="button linkbox__fetch"
                 onClick={handleFetch}
-                disabled={visible}
             >
                 Fetch
             </button>

@@ -68,8 +68,20 @@ export default function Category(props) {
                             <td className="topic__link__timestamp">
                                 {link.formattedTime}
                             </td>
-                            <td className="topic__link__title">
-                                <Link to={link.internalUrl}>{link.title}</Link>
+                            <td className="category__link__title">
+                                {link.iframe ? (
+                                    <Link to={link.internalUrl}>
+                                        {link.title}
+                                    </Link>
+                                ) : (
+                                    <a
+                                        href={link.url}
+                                        rel="noopener noreferrer"
+                                        target="_blank"
+                                    >
+                                        {link.title}
+                                    </a>
+                                )}
                             </td>
                             <td className="topic__link__category">
                                 {link.categoryName}
@@ -100,7 +112,11 @@ export default function Category(props) {
                             {link.formattedTime}
                         </div>
                         <div className="topic__grid__title">
-                            <Link to={link.internalUrl}>{link.title}</Link>
+                            {link.iframe ? (
+                                <Link to={link.internalUrl}>{link.title}</Link>
+                            ) : (
+                                <a href={link.url}>{link.title}</a>
+                            )}
                         </div>
                         <div className="topic__grid__category">
                             {link.categoryName}

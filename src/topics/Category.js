@@ -89,7 +89,19 @@ export default function Category(props) {
                                 {link.formattedTime}
                             </td>
                             <td className="category__link__title">
-                                <Link to={link.internalUrl}>{link.title}</Link>
+                                {link.iframe ? (
+                                    <Link to={link.internalUrl}>
+                                        {link.title}
+                                    </Link>
+                                ) : (
+                                    <a
+                                        href={link.url}
+                                        rel="noopener noreferrer"
+                                        target="_blank"
+                                    >
+                                        {link.title}
+                                    </a>
+                                )}
                             </td>
                             <td className="category__link__claps">
                                 {link.claps} claps

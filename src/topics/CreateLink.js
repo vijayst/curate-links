@@ -3,16 +3,16 @@ import firebase from '../common/firebase';
 import LinkBox from '../common/LinkBox';
 import Message from '../common/Message';
 
+let submitProps;
+
 export default function CreateLink(props) {
     const [url, setURL] = useState('');
     const [disabled, setDisabled] = useState(true);
     const { topic, category, categoryName, onAdd } = props;
     const [message, setMessage] = useState('');
 
-    let submitProps;
-
     function handleSubmit(e) {
-        const { key, title, url } = submitProps;
+        const { key, title, url, iframe } = submitProps;
         e.preventDefault();
         const linkRef = firebase.database().ref(`links/${key}`);
         const timestamp = Date.now();
@@ -32,7 +32,8 @@ export default function CreateLink(props) {
             topic,
             category: `${topic}_${category}`,
             categoryName,
-            claps: 10
+            claps: 10,
+            iframe
         });
         onAdd({
             key: key,
@@ -41,7 +42,8 @@ export default function CreateLink(props) {
             claps: 10,
             internalUrl: `/topics/${topic}/${category}/${key}`,
             timestamp,
-            formattedTime
+            formattedTime,
+            iframe
         });
 
         setMessage('Link added, Thanks');
