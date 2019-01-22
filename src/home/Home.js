@@ -21,16 +21,16 @@ export default function Home() {
             </div>
             <div className="home__benefits">
                 <div className="home__benefit">
-                    Curate Links allows you to select a topic to curate. Within a topic, you can have multiple categories.
+                    Curate Links allows you to select a topic to curate. Within a topic, create multiple categories.
                     The topic and all categories are publicly available as web pages.
                 </div>
                 <div className="home__benefit">
-                    Curate Links allows you to add links. Other users can recommend the link by clapping on it. 
+                    Curate Links allows you or the community to add links. Other users can recommend the link by clapping on it. 
                     The most clapped link will be considered reference links for the topic. 
                 </div>
                 <div className="home__benefit">
-                    The entire product is available in GitHub to build trust with the user community. Currently, there is one topic available.
-                    This allows the technical community to curate links on React.
+                    The entire product is available on GitHub to build trust with the community. Currently, there is only one topic available.
+                    The topic is on React and allows the React community to curate links on React.
                 </div>
             </div>
         </div>
