@@ -32,6 +32,7 @@ export default function Category(props) {
                             claps: c.child('claps').val(),
                             internalUrl: c.child('internalUrl').val(),
                             categoryName: c.child('categoryName').val(),
+                            iframe: c.child('iframe').val(),
                             timestamp,
                             formattedTime
                         });
