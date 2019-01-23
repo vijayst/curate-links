@@ -16,11 +16,9 @@ export default function LinkBox(props) {
             .replace('https://', '')
             .replace('http://', '')
             .replace(/\./g, '_')
-            .replace(/\//g, '__');
-        const end = key.indexOf('?');
-        if (end > 0) {
-            key = key.substring(0, end);
-        }
+            .replace(/\//g, '_')
+            .replace(/\?/g, '_')
+            .replace(/&/g, '_');
         return key;
     }
 
