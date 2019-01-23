@@ -130,7 +130,17 @@ export default function Category(props) {
                             {link.formattedTime}
                         </div>
                         <div className="category__grid__title">
-                            <Link to={link.internalUrl}>{link.title}</Link>
+                            {link.iframe ? (
+                                <Link to={link.internalUrl}>{link.title}</Link>
+                            ) : (
+                                <a
+                                    href={link.url}
+                                    rel="noopener noreferrer"
+                                    target="_blank"
+                                >
+                                    {link.title}
+                                </a>
+                            )}
                         </div>
                         <div className="category__grid__claps">
                             {link.claps} claps
