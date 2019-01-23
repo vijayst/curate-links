@@ -6,23 +6,22 @@
     &__nav {
         transition: flex-basis 0.3ms ease-in-out;
         flex: 0 0 24rem;
-        background-color: $color-bg;
+        background-color: $color-bg-transparent;
+
+        @media screen and (max-width: 768px) {
+            position: fixed;
+            min-height: 100vh;
+        }
 
         svg {
             fill: $color-primary;
         }
 
         &--collapse {
+            position: static;
+            flex: 0 0 3.2rem;
             padding-top: 5.6rem;
             text-align: center;
-        }
-
-        @media screen and (max-width: 900px) {
-            flex: 0 0 8rem;
-        }
-
-        @media screen and (max-width: 600px) {
-            flex: 0 0 3.2rem;
         }
 
         &__topic {

@@ -41,7 +41,7 @@ export default function Layout(props) {
     }, []);
 
     function handleResize() {
-        setShouldCollapse(window.innerWidth < 600);
+        setShouldCollapse(window.innerWidth < 768);
     }
 
     function handleExpand() {
